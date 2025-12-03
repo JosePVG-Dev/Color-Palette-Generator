@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { MarkGithubIcon } from "@primer/octicons-react";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://colorpalettehub.netlify.app"),
-  title: "Color Palette Hub 🎨",
+  title: "Color Palette Generator 🎨",
   description: "Generate random or custom color palettes and gradients easily.",
   keywords: ["colors", "palette", "gradients", "design", "art", "creative tools"],
   authors: [{ name: "Jose", url: "https://colorpalettehub.netlify.app" }],
@@ -42,32 +42,47 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
- return (
-  <html lang="en">
-    <body
-      className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
-    >
-      {/* Contenido principal (crece y empuja al footer abajo) */}
-      <main className="flex-1">
-        {children}
-      </main>
-
-      {/* Footer */}
-      <footer className="footer footer-center w-full bg-base-300 text-base-content p-4 mt-auto">
-        <aside>
-          <div className="flex flex-col sm:flex-row items-center">
-            <p>© {new Date().getFullYear()} - JosevDev</p>
-            <a
-              href="https://github.com/Fluxzify"
-              className="flex items-center gap-2 sm:pl-4 mt-2 sm:mt-0 hover:text-blue-500"
-            >
-              <MarkGithubIcon size={24} />
-              GitHub
-            </a>
+  return (
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-gray-800 to-indigo-950`}
+      >
+        {/* Header */}
+        <header className="w-full bg-gradient-to-r from-purple-600 via-purple-700 to-indigo-700 text-white shadow-lg">
+          <div className="container mx-auto flex justify-between items-center py-4 px-6">
+            {/* Logo o título */}
+            <Link href="/" className="text-2xl font-bold flex items-center gap-2 drop-shadow-lg hover:opacity-90 transition-opacity">
+              <span className="text-3xl">🎨</span>
+              Color Palette Generator
+            </Link>
+            {/* Botones */}
+            <nav className="space-x-4">
+              <Link
+                href="/"
+                className="btn bg-purple-200 text-purple-800 border-purple-300 hover:bg-purple-300 hover:text-purple-900 transition-all duration-300 font-semibold"
+              >
+                Home
+              </Link>
+              <Link
+                href="/about"
+                className="btn bg-purple-200 text-purple-800 border-purple-300 hover:bg-purple-300 hover:text-purple-900 transition-all duration-300 font-semibold"
+              >
+                About me
+              </Link>
+            </nav>
           </div>
-        </aside>
-      </footer>
-    </body>
-  </html>
-);
+        </header>
+
+        {/* Contenido principal */}
+        <main className="flex-grow p-6">
+          {children}
+        </main>
+
+        {/* Footer */}
+        <footer className="bg-gradient-to-r from-purple-800 via-purple-900 to-indigo-900 text-gray-200 p-4 text-center shadow-lg">
+          &copy; {new Date().getFullYear()} Color Palette Generator. All rights reserved.
+        </footer>
+      </body>
+    </html>
+  );
 }
